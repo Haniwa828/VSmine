@@ -62,12 +62,12 @@ const putBody = () => {
     });
 
     addButton(userBody, "button", [], (t) => {
-        t.textContent = "Button";
+        t.textContent = "Submit";
         t.addEventListener("click", submit);
     });
 
     addButton(userBody, "button", [], (t) => {
-        t.textContent = "Button";
+        t.textContent = "Get";
         t.addEventListener("click", getData);
     });
 

@@ -53,6 +53,9 @@ const leftClick = (event) => {
     target.classList.add(`${player}Open`)
 
     cordUpdate();
+    if (first == "first") { // 初手は実行
+        openUpdate(player);
+    }
 
     // クリア判定
     checkClear();

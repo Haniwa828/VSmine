@@ -20,7 +20,7 @@ const putBody = () => {
     const bombArea = addDiv(userBody, ["bombArea"]);
     addDiv(bombArea, ["oriBombNum"], (t) => {
         t.id = "oriBombNum";
-        t.textContent = bomb + " <= Bomb <=";
+        t.textContent = bomb + " ≦ Bomb ≦ ";
     });
     let bombNum = addDiv(bombArea, ["currentBombNum"], (t) => {
         t.id = "currentBombNum";
@@ -35,7 +35,7 @@ const putBody = () => {
     });
 
     addDiv(bombArea, [], (t) => {
-        t.textContent = ",　";
+        t.textContent = ", P1:P2 =";
     });
     addDiv(bombArea, ["p1OpenNum"], (t) => {
         t.id = "p1OpenNum";

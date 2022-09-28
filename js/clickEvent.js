@@ -18,7 +18,6 @@ const leftClick = (event) => {
     const player = getParam("player");
     const oppoPlayer = (player == "p1") ? "p2" : "p1";
 
-    console.log(target.className);
     // すでに空いているマスや旗が置いてあったら何もしない
     if(target.className.indexOf(`${player}Open`) >= 0){ // target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0
         return;

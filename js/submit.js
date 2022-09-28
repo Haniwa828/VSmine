@@ -2,7 +2,6 @@ const submit = () => {
     const bombCord = recall("bomb");
 
     const bombCordJson = JSON.stringify(bombCord);
-    console.log(bombCordJson);
 
     // URLの作成
     let url = "https://script.google.com/macros/s/AKfycbzR0tVy7PUDz-muHXFPgI-uFAG6Ag3IPGiz1Fthv5riQs1a3HjwpXeF-TRsbZfhk6SaUg/exec?data=";

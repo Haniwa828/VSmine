@@ -108,7 +108,6 @@ const checkClear = (width = 9, height = 9) => {
                 }
             }
         }
-        console.log(p1Open, p2Open)
 
         if(p1Open > p2Open){
             addDiv(board, [], (t) => {

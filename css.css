@@ -1,0 +1,56 @@
+/* #header, #body{
+    width: 100%;
+    margin: 0 auto;
+} */
+
+.setting, .setting2, .bombArea, .boardArea{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.label{
+    margin-right: 5px;
+}
+
+.input{
+    margin-right: 10px;
+}
+
+.start.btn{
+    width: 300px;
+    margin-bottom: 5%;
+}
+
+td{
+    border: solid 2px white;
+    background-color: yellowgreen;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.preTd{
+    width: 10px;
+    height: 10px;
+}
+
+#p2Body .p1Open, #p1Body .p2Open{
+    background-color: rgb(153, 153, 153);
+}
+
+#p1Body .p1Open, #p2Body .p2Open{
+    background-color: lightgray;
+}
+
+#p1Body .p1Flag, #p2Body .p2Flag{
+    background-color: yellow;
+}
+
+.oriBomb{
+    background-color: red;
+}
+
+#p1Body .p1Bomb, #p2Body .p2Bomb{
+    background-color: coral;
+}

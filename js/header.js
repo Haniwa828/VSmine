@@ -31,7 +31,7 @@ const putSetting = (parentArea) => {
     addLabel(parentArea, "bomb", "B:", ["label"]);
     const bomb = addInput(parentArea, "number", 9, ["input"], (t) => {
         t.id = "bomb";
-        t.max = 10;
+        t.max = 20;
         t.min = 2;
     });
 }

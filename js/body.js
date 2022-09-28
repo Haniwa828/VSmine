@@ -34,6 +34,21 @@ const putBody = () => {
         t.textContent = 0;
     });
 
+    addDiv(bombArea, [], (t) => {
+        t.textContent = ",　";
+    });
+    addDiv(bombArea, ["p1OpenNum"], (t) => {
+        t.id = "p1OpenNum";
+        t.textContent = 0;
+    });
+    addDiv(bombArea, [], (t) => {
+        t.textContent = ":";
+    });
+    addDiv(bombArea, ["p2OpenNum"], (t) => {
+        t.id = "p2OpenNum";
+        t.textContent = 0;
+    });
+
     const boardArea = addDiv(userBody, ["boardArea"]);
     const board = addBoard(boardArea, ["board"], (t) => {
         t.style.pointerEvents = "auto";

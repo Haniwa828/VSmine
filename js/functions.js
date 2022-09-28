@@ -88,6 +88,23 @@ const checkClear = (width = 9, height = 9) => {
         }
     }
 
+    const p1OpenNum = document.getElementById("p1OpenNum");
+    const p2OpenNum = document.getElementById("p2OpenNum");
+    let p1Open = 0;
+    let p2Open = 0;
+    for(let i = 0; i < height; i++){
+        for(let j = 0; j < width; j++){
+            if(bombCord[i][j].includes("p1Open")){
+                p1Open++;
+            }
+            if(bombCord[i][j].includes("p2Open")){
+                p2Open++;
+            }
+        }
+    }
+    p1OpenNum.textContent = p1Open;
+    p2OpenNum.textContent = p2Open;
+
     if(filledCell == width*height){
         const board =  document.getElementById("board");
         board.style.pointerEvents = "none";
@@ -96,18 +113,18 @@ const checkClear = (width = 9, height = 9) => {
         //     t.textContent = "Clear";
         // });
 
-        let p1Open = 0;
-        let p2Open = 0;
-        for(let i = 0; i < height; i++){
-            for(let j = 0; j < width; j++){
-                if(bombCord[i][j].includes("p1Open")){
-                    p1Open++;
-                }
-                if(bombCord[i][j].includes("p2Open")){
-                    p2Open++;
-                }
-            }
-        }
+        // let p1Open = 0;
+        // let p2Open = 0;
+        // for(let i = 0; i < height; i++){
+        //     for(let j = 0; j < width; j++){
+        //         if(bombCord[i][j].includes("p1Open")){
+        //             p1Open++;
+        //         }
+        //         if(bombCord[i][j].includes("p2Open")){
+        //             p2Open++;
+        //         }
+        //     }
+        // }
 
         if(p1Open > p2Open){
             addDiv(board, [], (t) => {

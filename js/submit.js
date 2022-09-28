@@ -33,5 +33,6 @@ const getData = () => {
         // openUpdate(player);
         // cellUpdate(oldData, "preTd");
         openUpdate(player);
+        checkClear();
     });
 }

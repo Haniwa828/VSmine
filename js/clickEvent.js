@@ -17,6 +17,10 @@ const leftClick = (event) => {
     // let player = recall("player");
     const player = getParam("player");
     const oppoPlayer = (player == "p1") ? "p2" : "p1";
+    
+    const actionNum = document.getElementById("actionNum");
+    const bombActionNum = document.getElementById("bombActionNum");
+    const handicap = document.getElementsByClassName("handicap");
 
     // すでに空いているマスや旗が置いてあったら何もしない
     if(target.className.indexOf(`${player}Open`) >= 0){ // target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0
@@ -28,6 +32,9 @@ const leftClick = (event) => {
 
     // シフトキー押しながらの場合
     if (event.shiftKey == true && first != "first") { // 初手はできなくする
+        if(bombActionNum.textContent == "0" && (handicap[0] == undefined || Number(handicap[1].textContent) == 0)){ // 爆弾操作回数上限ならば
+            return;
+        }
         leftShiftClick(target);
 
         return;
@@ -37,28 +44,53 @@ const leftClick = (event) => {
         return
     }
 
-    // 爆弾を踏んだか判定
-    if (target.className.indexOf("oriBomb") >= 0 || target.className.indexOf(`${oppoPlayer}Bomb`) >= 0) { // p1Bombの判定は後ほど改変   
-        const board =  document.getElementById("board");
-        board.style.pointerEvents = "none";
-        addDiv(board, [], (t) => {
-            t.textContent = "Game Over";
-        });
+    if(actionNum.textContent != "0"){    
+        // 爆弾を踏んだか判定
+        if (target.className.indexOf("oriBomb") >= 0 || target.className.indexOf(`${oppoPlayer}Bomb`) >= 0) { // p1Bombの判定は後ほど改変   
+            const board =  document.getElementById("board");
+            board.style.pointerEvents = "none";
+            addDiv(board, [], (t) => {
+                t.textContent = "Game Over";
+            });
 
-        return;
+            return;
+        }
+
+        // 周囲の爆弾の個数確認と展開
+        countBomb(y, x, width, height, bombCord, target);
+        target.classList.add(`${player}Open`);
+        if (first == "first") { // 初手は実行
+            target.classList.add(`${oppoPlayer}Open`); // 初手はお互いに公開
+        }
+
+        cordUpdate();
+        if (first == "first") { // 初手は実行
+            openUpdate(player);
+        }
+
+        // ポイント加算
+        addPoint(target, player, oppoPlayer);
+
+        // 行動回数
+        actionNum.textContent = Number(actionNum.textContent) - 1;
     }
 
-    // 周囲の爆弾の個数確認と展開
-    countBomb(y, x, width, height, bombCord, target);
-    target.classList.add(`${player}Open`)
+    if(actionNum.textContent == "0"){
+        // ハンデ考慮
+        if(handicap[0] == undefined || Number(handicap[1].textContent) == 0){
+            const board =  document.getElementById("board");
 
-    cordUpdate();
-    if (first == "first") { // 初手は実行
-        openUpdate(player);
+            bombActionNum.textContent = 0;
+            board.style.pointerEvents = "none";
+        }
     }
 
     // クリア判定
     checkClear();
+
+    if(recall("first") != "first" && first == "first"){ // 初手っていう指示
+        save(first, "first");
+    }
     
 }
 
@@ -141,6 +173,27 @@ const leftShiftClick = (target) => {
     cordUpdate();
     openUpdate(player);
     save(bombNum, "bombNum");
+
+    // 行動回数
+    const actionNum = document.getElementById("actionNum");
+    const bombActionNum = document.getElementById("bombActionNum");
+    const handicap = document.getElementsByClassName("handicap");
+
+    // ハンデ考慮
+    if(!(handicap[0] == undefined)  && Number(handicap[1].textContent) > 0){
+        handicap[1].textContent = Number(handicap[1].textContent) - 1;
+    }
+    else{
+        actionNum.textContent = Number(actionNum.textContent) - 1;
+        bombActionNum.textContent = Number(bombActionNum.textContent) - 1;
+    }
+
+    if(actionNum.textContent == "0" && (handicap[0] == undefined || Number(handicap[1].textContent) == 0)){
+        const board =  document.getElementById("board");
+
+        bombActionNum.textContent = 0;
+        board.style.pointerEvents = "none";
+    }
 
     checkClear();
 } 

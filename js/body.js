@@ -25,28 +25,66 @@ const putBody = () => {
     let bombNum = addDiv(bombArea, ["currentBombNum"], (t) => {
         t.id = "currentBombNum";
         t.textContent = bomb;
-    });
+    });  
     addDiv(bombArea, [], (t) => {
-        t.textContent = ", Flag: ";
+        t.textContent = ", Flag_";
     });
     addDiv(bombArea, ["flagNum"], (t) => {
         t.id = "flagNum";
         t.textContent = 0;
     });
 
-    addDiv(bombArea, [], (t) => {
-        t.textContent = ", P1:P2 =";
+    // ポイントの情報
+    const pointArea = addDiv(userBody, ["pointArea"]);
+    addDiv(pointArea, [], (t) => {
+        t.textContent = "マスの数_";
     });
-    addDiv(bombArea, ["p1OpenNum"], (t) => {
+    addDiv(pointArea, ["p1OpenNum"], (t) => {
         t.id = "p1OpenNum";
         t.textContent = 0;
     });
-    addDiv(bombArea, [], (t) => {
+    addDiv(pointArea, [], (t) => {
         t.textContent = ":";
     });
-    addDiv(bombArea, ["p2OpenNum"], (t) => {
+    addDiv(pointArea, ["p2OpenNum"], (t) => {
         t.id = "p2OpenNum";
         t.textContent = 0;
+    });
+    addDiv(pointArea, [], (t) => {
+        t.textContent = ", ポイント_";
+    });
+    addDiv(pointArea, ["p1Point"], (t) => {
+        t.id = "p1Point";
+        t.textContent = 0;
+    });
+    addDiv(pointArea, [], (t) => {
+        t.textContent = ":";
+    });
+    addDiv(pointArea, ["p2Point"], (t) => {
+        t.id = "p2Point";
+        t.textContent = 0;
+    });
+
+    // 行動回数の情報
+    const actionNumArea = addDiv(userBody, ["actionNumArea"], (t) => {
+        t.id = "actionNumArea";
+    });
+    addDiv(actionNumArea, [], (t) => {
+        t.textContent = "行動回数(爆弾操作)_";
+    });
+    addDiv(actionNumArea, ["actionNum"], (t) => {
+        t.id = "actionNum";
+        t.textContent = 5;
+    });
+    addDiv(actionNumArea, [], (t) => {
+        t.textContent = "(";
+    });
+    addDiv(actionNumArea, ["bombActionNum"], (t) => {
+        t.id = "bombActionNum";
+        t.textContent = 3;
+    });
+    addDiv(actionNumArea, [], (t) => {
+        t.textContent = ")";
     });
 
     const boardArea = addDiv(userBody, ["boardArea"]);

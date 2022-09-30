@@ -2,10 +2,31 @@ const submit = () => {
     const bombCord = recall("bomb");
 
     const bombCordJson = JSON.stringify(bombCord);
+    const p1Point = document.getElementById(`p1Point`);
+    const p2Point = document.getElementById(`p2Point`);
+    let oppoPlayer = (getParam("player") == "p1") ? "p2" : "p1";
+    const actionNum = document.getElementById("actionNum");
+    const bombActionNum = document.getElementById("bombActionNum");
+    const handicap = document.getElementsByClassName("handicap");
+
+    
+    actionNum.textContent = 0;
+    bombActionNum.textContent = 0;
+
+    if(recall("first") == "first"){ 
+        oppoPlayer = oppoPlayer + "first";
+        save("not", "first");
+    }
+    if(handicap.length > 0){
+        if (0 < handicap.length) {
+            [...handicap].forEach(function(v){ return v.remove() })
+        }
+    }
 
     // URLの作成
     let url = "https://script.google.com/macros/s/AKfycbzR0tVy7PUDz-muHXFPgI-uFAG6Ag3IPGiz1Fthv5riQs1a3HjwpXeF-TRsbZfhk6SaUg/exec?data=";
-    url = url + bombCordJson;
+    url = url + bombCordJson + "&p1=" + p1Point.textContent + "&p2=" + p2Point.textContent + "&player=" + oppoPlayer;
+    ;
 
     // ウェブアプリの実行
     fetch(url) // グループ名とパスワードが一致するか確認
@@ -25,9 +46,44 @@ const getData = () => {
     .then(data => { // 結果取得
         const newData = JSON.parse(data[0].新しいデータ);
         const oldData = recall("bomb");
+        const p1PointGet = JSON.parse(data[0].p1);
+        const p2PointGet = JSON.parse(data[0].p2);
+        let nextPlayer = data[0].プレイヤー;
 
         save(newData, "bomb");
         const player = getParam("player");
+
+        // ポイント反映
+        const p1Point = document.getElementById(`p1Point`);
+        const p2Point = document.getElementById(`p2Point`);
+        p1Point.textContent = p1PointGet;
+        p2Point.textContent = p2PointGet;
+
+        const actionNum = document.getElementById("actionNum");
+        const bombActionNum = document.getElementById("bombActionNum");
+        const board =  document.getElementById("board");
+
+        if(nextPlayer.substr(0, 2) == getParam("player")){ // 自分のターンなら
+            actionNum.textContent = JSON.parse(data[0].行動回数);
+            bombActionNum.textContent = JSON.parse(data[0].爆弾設置回数);
+            board.style.pointerEvents = "auto";
+        }
+        else{
+            actionNum.textContent = 0;
+            bombActionNum.textContent = 0;
+            board.style.pointerEvents = "none";
+        }
+
+        if(nextPlayer.indexOf("first") != -1){ // 後攻の初手
+            const actionNumArea = document.getElementById("actionNumArea");
+            addDiv(actionNumArea, ["handicap"], (t) => {
+                t.textContent = ", ハンデ爆弾_";
+            });
+            addDiv(actionNumArea, ["handicap"], (t) => {
+                t.id = "handicap";
+                t.textContent = 2;
+            });
+        }
 
         cellUpdate(newData, "td");
         // openUpdate(player);

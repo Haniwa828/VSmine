@@ -26,6 +26,8 @@ const checkFirst = (x, y, width, height, bomb, bombCord) => {
 
         return "first";
     }
+
+    return "not";
 }
 
 // マスの周りの爆弾の数を数える
@@ -254,4 +256,12 @@ const cellUpdate = (data, id) => {
 
     currentBombNum.textContent = currentBombCount;
     flagNum.textContent = flagCount;
+}
+
+// ポイント加算
+const addPoint = (target, player, oppoPlayer) => {
+    if(target.className.indexOf(`${oppoPlayer}Open`) == -1){ 
+        const point = document.getElementById(`${player}Point`);
+        point.textContent = Number(point.textContent) + 1;
+    }
 }

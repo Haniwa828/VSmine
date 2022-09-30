@@ -3,10 +3,14 @@
     margin: 0 auto;
 } */
 
-.setting, .setting2, .bombArea, .boardArea{
+.setting, .setting2, .bombArea, .boardArea, .pointArea, .actionNumArea{
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
+}
+
+.setting{
+    display: none;
 }
 
 .label{
@@ -40,16 +44,20 @@ td{
 }
 
 #p1Body .p1Open, #p2Body .p2Open{
-    background-color: lightgray;
+    background-color: rgb(197, 196, 196);
+}
+
+#p1Body .p1Open.p2Open, #p2Body .p1Open.p2Open{
+    background-color: rgb(226, 225, 225);
 }
 
 #p1Body .p1Flag, #p2Body .p2Flag{
     background-color: yellow;
 }
 
-/* .oriBomb{
+.oriBomb{
     background-color: red;
-} */
+}
 
 #p1Body .p1Bomb, #p2Body .p2Bomb{
     background-color: coral;

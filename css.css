@@ -55,9 +55,9 @@ td{
     background-color: yellow;
 }
 
-.oriBomb{
+/* .oriBomb{
     background-color: red;
-}
+} */
 
 #p1Body .p1Bomb, #p2Body .p2Bomb{
     background-color: coral;

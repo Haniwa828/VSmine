@@ -108,7 +108,10 @@ const checkClear = (width = 9, height = 9) => {
     p2OpenNum.textContent = p2Open;
 
     if(filledCell == width*height){
+        const p1Point = document.getElementById(`p1Point`);
+        const p2Point = document.getElementById(`p2Point`);
         const board =  document.getElementById("board");
+
         board.style.pointerEvents = "none";
         
         // addDiv(board, [], (t) => {
@@ -128,12 +131,12 @@ const checkClear = (width = 9, height = 9) => {
         //     }
         // }
 
-        if(p1Open > p2Open){
+        if(Number(p1Point.textContent) > Number(p2Point.textContent)){
             addDiv(board, [], (t) => {
                 t.textContent = "Player1 win!";
             });
         }
-        else if(p1Open < p2Open){
+        else if(Number(p1Point.textContent) < Number(p2Point.textContent)){
             addDiv(board, [], (t) => {
                 t.textContent = "Player2 win!";
             });

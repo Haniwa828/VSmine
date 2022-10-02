@@ -8,6 +8,10 @@ const putHeader = () => {
     //     t.id = "oriBomb";
     //     t.textContent = 0;
     // });
+    const roomPass = addInput(setting2, "number", "", ["input", "roomPass"], (t) => {
+        t.id = "roomPass";
+        t.placeholder ="ルームパス";
+    });
     const startBtn = addButton(setting2, "button", ["start", "btn"], (t) => {
         t.textContent = "Start";
         t.addEventListener("click", start);

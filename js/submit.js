@@ -8,6 +8,7 @@ const submit = () => {
     const actionNum = document.getElementById("actionNum");
     const bombActionNum = document.getElementById("bombActionNum");
     const handicap = document.getElementsByClassName("handicap");
+    const roomPass = document.getElementById("roomPass").value;
 
     
     actionNum.textContent = 0;
@@ -25,8 +26,7 @@ const submit = () => {
 
     // URLの作成
     let url = "https://script.google.com/macros/s/AKfycbzR0tVy7PUDz-muHXFPgI-uFAG6Ag3IPGiz1Fthv5riQs1a3HjwpXeF-TRsbZfhk6SaUg/exec?data=";
-    url = url + bombCordJson + "&p1=" + p1Point.textContent + "&p2=" + p2Point.textContent + "&player=" + oppoPlayer;
-    ;
+    url = url + bombCordJson + "&p1=" + p1Point.textContent + "&p2=" + p2Point.textContent + "&player=" + oppoPlayer + "&pass=" + roomPass;
 
     // ウェブアプリの実行
     fetch(url) // グループ名とパスワードが一致するか確認
@@ -39,6 +39,9 @@ const submit = () => {
 const getData = () => {
     // URLの作成
     let url = "https://script.google.com/macros/s/AKfycbz8HA6hpTPJok_hrNmO-NsXOIzAPwaI66YUe-6rSV6j-q1p2W0xKBNIpq6X-C3FllFRVA/exec";
+    const roomPass = document.getElementById("roomPass").value;
+
+    url = url + "?pass=" + roomPass;
 
     // ウェブアプリの実行
     fetch(url) // グループ名とパスワードが一致するか確認

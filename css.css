@@ -26,6 +26,10 @@
     margin-bottom: 5%;
 }
 
+.roomPass{
+    width: 100px;
+}
+
 td{
     border: solid 2px white;
     background-color: yellowgreen;

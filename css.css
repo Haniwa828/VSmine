@@ -44,15 +44,18 @@ td{
 }
 
 #p2Body .p1Open, #p1Body .p2Open{
-    background-color: rgb(153, 153, 153);
+    background-color: rgb(154, 154, 154);
 }
 
 #p1Body .p1Open, #p2Body .p2Open{
-    background-color: rgb(197, 196, 196);
+    background-color: rgb(154, 154, 154);
+    font-weight: bold;
+    color: black;
 }
 
 #p1Body .p1Open.p2Open, #p2Body .p1Open.p2Open{
-    background-color: rgb(226, 225, 225);
+    background-color: lightgray;
+    color: black;
 }
 
 #p1Body .p1Flag, #p2Body .p2Flag{

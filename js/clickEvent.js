@@ -1,6 +1,9 @@
 // startが押された時
 const start = () => {
     putBody();
+
+    const roomPass = document.getElementById("roomPass");
+    roomPass.readOnly = true;
 }
 
 // マスが左クリックされた時

@@ -30,7 +30,9 @@ const addLabel = (parentArea, target, text, className = [], callBack = null) => 
     
     newElm.textContent = text;
     newElm.htmlFor = target;
-    newElm.classList.add(className);
+    for(let i = 0; i < className.length; i++){
+        newElm.classList.add(className[i]);
+    }
     if(callBack && typeof(callBack) === "function") callBack(newElm);
     
     parentArea.appendChild(newElm);

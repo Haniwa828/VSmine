@@ -12,6 +12,10 @@ const save = (data, situation) => {
         case situation == "first":
             sessionStorage.setItem("first", savedData);
             break;
+        
+        case situation == "player":
+            sessionStorage.setItem("player", savedData);
+            break;
 
         default:
             console.log("来たよ");
@@ -35,6 +39,10 @@ const recall = (situation) => {
 
         case situation == "first":
             getData = sessionStorage.getItem("first");
+            break;
+
+        case situation == "player":
+            getData = sessionStorage.getItem("player");
             break;
 
         default:

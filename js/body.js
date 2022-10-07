@@ -4,7 +4,8 @@ const putBody = () => {
 
     body.innerHTML = ""; // 中の要素全削除
 
-    const player = getParam("player");
+    const player = recall("player");
+    // const player = getParam("player");
     const userBody = addDiv(body, [], (t) => {
         t.id = `${player}Body`;
     });

@@ -3,7 +3,7 @@
     margin: 0 auto;
 } */
 
-.setting, .setting2, .bombArea, .boardArea, .pointArea, .actionNumArea{
+.setting, .setting2, .setting3, .bombArea, .boardArea, .pointArea, .actionNumArea{
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
@@ -22,7 +22,7 @@
 }
 
 .start.btn{
-    width: 300px;
+    width: 95%;
 }
 
 .roomPass{

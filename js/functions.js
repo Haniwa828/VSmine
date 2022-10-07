@@ -226,7 +226,8 @@ const cellUpdate = (data, id) => {
     let tdList = document.getElementsByClassName(id);
     const width = bombCord[0].length;
     const height = bombCord.length;
-    const player = getParam("player");
+    const player = recall("player");
+    // const player = getParam("player");
     const oppoPlayer = (player == "p1") ? "p2" : "p1";
     let currentBombNum = document.getElementById("currentBombNum");
     let flagNum = document.getElementById("flagNum");

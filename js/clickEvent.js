@@ -1,9 +1,20 @@
 // startが押された時
 const start = () => {
-    putBody();
-
     const roomPass = document.getElementById("roomPass");
     roomPass.readOnly = true;
+    const player = document.getElementsByName('playerSelect');
+    let checkValue = '';
+
+    for (let i = 0; i < player.length; i++){
+        if (player[i].checked){
+            checkValue = player[i].value;
+        }
+
+        player[i].disabled = true;
+    }
+    save(checkValue, "player");
+
+    putBody();
 }
 
 // マスが左クリックされた時
@@ -17,8 +28,8 @@ const leftClick = (event) => {
     const height = document.getElementById("height").value;
     const bomb = document.getElementById("bomb").value;
     let bombCord = recall("bomb");
-    // let player = recall("player");
-    const player = getParam("player");
+    const player = recall("player");
+    // const player = getParam("player");
     const oppoPlayer = (player == "p1") ? "p2" : "p1";
     
     const actionNum = document.getElementById("actionNum");
@@ -35,7 +46,7 @@ const leftClick = (event) => {
 
     // シフトキー押しながらの場合
     if (event.shiftKey == true && first != "first") { // 初手はできなくする
-        if(bombActionNum.textContent == "0" && (handicap[0] == undefined || Number(handicap[1].textContent) == 0)){ // 爆弾操作回数上限ならば
+        if((bombActionNum.textContent == "0" && (handicap[0] == undefined || Number(handicap[1].textContent) == 0)) || target.className.indexOf(`${oppoPlayer}Open`) >= 0){ // 爆弾操作回数上限もしくは相手が開いていたならば
             return;
         }
         leftShiftClick(target);
@@ -101,7 +112,8 @@ const leftClick = (event) => {
 const rightClick = (event) => {
     const target = event.target;
     let flagNum = document.getElementById("flagNum");
-    const player = getParam("player");
+    const player = recall("player");
+    // const player = getParam("player");
 
     event.preventDefault();
     if (target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0) {
@@ -134,7 +146,8 @@ const leftShiftClick = (target) => {
     // let bombNum = recall("bombNum");
     let bombNum = Number(currentBombNum.textContent);
     let flagNum = document.getElementById("flagNum");
-    const player = getParam("player");
+    const player = recall("player");
+    // const player = getParam("player");
 
     // 爆弾追加
     if((target.className).indexOf(`${player}Bomb`) == -1){

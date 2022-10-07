@@ -3,16 +3,28 @@ const putHeader = () => {
     const header = document.getElementById("header");
     const setting = addDiv(header, ["setting"]);
     const setting2 = addDiv(header, ["setting2"]);
-    putSetting(setting);  
-    // addSpan(setting, ["oriBomb"], (t) => {
-    //     t.id = "oriBomb";
-    //     t.textContent = 0;
-    // });
-    const roomPass = addInput(setting2, "number", "", ["input", "roomPass"], (t) => {
+    const setting3 = addDiv(header, ["setting3"]);
+    
+    putSetting(setting);
+    
+    addInput(setting2, "number", "", ["input", "roomPass"], (t) => {
         t.id = "roomPass";
         t.placeholder ="ルームパス";
     });
-    const startBtn = addButton(setting2, "button", ["start", "btn"], (t) => {
+    addInput(setting2, "radio", "p1", ["input", "playerNum"], (t) => {
+        t.id = "p1Radio";
+        t.name = "playerSelect";
+        t.checked = "checked";
+    });
+    addLabel(setting2, "p1Radio", "プレイヤー１");
+    addInput(setting2, "radio", "p2", ["input", "playerNum"], (t) => {
+        t.id = "p2Radio";
+        t.name = "playerSelect";
+        t.textContent ="プレイヤー２";
+    });
+    addLabel(setting2, "p2Radio", "プレイヤー２");
+
+    addButton(setting3, "button", ["start", "btn"], (t) => {
         t.textContent = "Start";
         t.addEventListener("click", start);
     });
@@ -35,7 +47,7 @@ const putSetting = (parentArea) => {
     addLabel(parentArea, "bomb", "B:", ["label"]);
     const bomb = addInput(parentArea, "number", 9, ["input"], (t) => {
         t.id = "bomb";
-        t.max = 20;
+        t.max = 10;
         t.min = 2;
     });
 }

@@ -4,7 +4,7 @@ const submit = () => {
     const bombCordJson = JSON.stringify(bombCord);
     const p1Point = document.getElementById(`p1Point`);
     const p2Point = document.getElementById(`p2Point`);
-    let oppoPlayer = (getParam("player") == "p1") ? "p2" : "p1";
+    let oppoPlayer = (recall("player") == "p1") ? "p2" : "p1";
     const actionNum = document.getElementById("actionNum");
     const bombActionNum = document.getElementById("bombActionNum");
     const handicap = document.getElementsByClassName("handicap");
@@ -54,7 +54,8 @@ const getData = () => {
         let nextPlayer = data[0].プレイヤー;
 
         save(newData, "bomb");
-        const player = getParam("player");
+        const player = recall("player");
+    // const player = getParam("player");
 
         // ポイント反映
         const p1Point = document.getElementById(`p1Point`);
@@ -66,7 +67,7 @@ const getData = () => {
         const bombActionNum = document.getElementById("bombActionNum");
         const board =  document.getElementById("board");
 
-        if(nextPlayer.substr(0, 2) == getParam("player")){ // 自分のターンなら
+        if(nextPlayer.substr(0, 2) == player){ // 自分のターンなら
             actionNum.textContent = JSON.parse(data[0].行動回数);
             bombActionNum.textContent = JSON.parse(data[0].爆弾設置回数);
             board.style.pointerEvents = "auto";

@@ -6,23 +6,12 @@ const checkFirst = (x, y, width, height, bomb, bombCord) => {
             bombCord[i] = Array(Number(width)).fill(0);
         }
 
-        // // 選択したマスの周囲に-1設置
-        // for(let i = y - 1; i <= y + 1; i++){
-        //     for(let j = x - 1; j <= x + 1; j++){
-        //         if(i >= 0 && i < height && j >= 0 && j < width){ 
-        //             bombCord[i][j] = -1;
-        //         }
-        //     }
-        // }
         bombCord[y][x] = -1;
 
 
         putBomb(width, height, bomb, bombCord);
 
         const td = document.getElementsByTagName("td");
-        // for(let i = 0; i < td.length; i++){
-        //     td[i].addEventListener("contextmenu", rightClick);
-        // }
 
         return "first";
     }
@@ -45,32 +34,11 @@ const countBomb = (y, x, width, height, bombCord, target) => {
         }
     }
 
-    // if(bombs === 0){
-    //     open(y, x);
-    // } 
-    // else{
-    //     target.textContent = bombs;
-    //     target.classList.add("open");
-    // }
-
     target.textContent = bombs;
-    // target.classList.add(`${player}Open`);
 }
 
 // クリア判定
 const checkClear = (width = 9, height = 9) => {
-    // const p1OpenCell = document.getElementsByClassName("p1Open");
-    // const p2OpenCell = document.getElementsByClassName("p2Open");
-    // if(p1OpenCell.length + p2OpenCell.length + Number(bomb) == width*height){
-    //     const board =  document.getElementById("board");
-    //     board.style.pointerEvents = "none";
-        
-    //     addDiv(board, [], (t) => {
-    //     t.textContent = "Clear";
-    //     });
-
-    //     return;
-    // }
 
     let bombCord = recall("bomb");
 
@@ -113,39 +81,40 @@ const checkClear = (width = 9, height = 9) => {
         const board =  document.getElementById("board");
 
         board.style.pointerEvents = "none";
-        
-        // addDiv(board, [], (t) => {
-        //     t.textContent = "Clear";
-        // });
 
-        // let p1Open = 0;
-        // let p2Open = 0;
-        // for(let i = 0; i < height; i++){
-        //     for(let j = 0; j < width; j++){
-        //         if(bombCord[i][j].includes("p1Open")){
-        //             p1Open++;
-        //         }
-        //         if(bombCord[i][j].includes("p2Open")){
-        //             p2Open++;
-        //         }
-        //     }
-        // }
+        const player = recall("player");
 
         if(Number(p1Point.textContent) > Number(p2Point.textContent)){
-            addDiv(board, [], (t) => {
-                t.textContent = "Player1 win!";
-            });
+            if(player == "p1"){
+                addDiv(board, [], (t) => {
+                    t.textContent = "You Win!";
+                });
+            }
+            else{
+                addDiv(board, [], (t) => {
+                    t.textContent = "You Lose.";
+                });
+            }
         }
         else if(Number(p1Point.textContent) < Number(p2Point.textContent)){
-            addDiv(board, [], (t) => {
-                t.textContent = "Player2 win!";
-            });
+            if(player == "p1"){
+                addDiv(board, [], (t) => {
+                    t.textContent = "You Lose.";
+                });
+            }
+            else{
+                addDiv(board, [], (t) => {
+                    t.textContent = "You Win!";
+                });
+            }
         }
         else{
             addDiv(board, [], (t) => {
                 t.textContent = "Draw";
             });
         }
+
+        submit();
 
         return;
     }
@@ -185,28 +154,7 @@ const openUpdate = (player) => {
 
         countBomb(y, x, width, height, bombCord, openList[i]);
     }
-
-    // const openList2 = document.getElementsByClassName(`p2Open`);
-    // for(let i = 0; i < openList2.length; i++){
-    //     const x = Number(openList2[i].id.substr(openList2[i].id.indexOf(":") + 1, openList2[i].id.length));
-    //     const y = Number(openList2[i].id.substr(2, openList2[i].id.indexOf(":") - 2));
-    //     const width = document.getElementById("width").value;
-    //     const height = document.getElementById("height").value;
-    //     let bombCord = recall("bomb");
-
-    //     countBomb(y, x, width, height, bombCord, openList2[i]);
-    // }
 }
-
-// function array_equal(a, b) {
-//     if (!Array.isArray(a))    return "a is not array";
-//     if (!Array.isArray(b))    return "b is not array";
-//     if (a.length != b.length) return "each length is not same";
-//     for (var i = 0, n = a.length; i < n; ++i) {
-//       if (a[i] !== b[i]) return false;
-//     }
-//     return true;
-// }
 
 // URLからパラメータ取得
 function getParam(name, url) { 

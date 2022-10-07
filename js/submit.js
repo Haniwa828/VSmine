@@ -9,6 +9,7 @@ const submit = () => {
     const bombActionNum = document.getElementById("bombActionNum");
     const handicap = document.getElementsByClassName("handicap");
     const roomPass = document.getElementById("roomPass").value;
+    const gameOver = document.getElementsByClassName("gameOver");
 
     
     actionNum.textContent = 0;
@@ -17,6 +18,9 @@ const submit = () => {
     if(recall("first") == "first"){ 
         oppoPlayer = oppoPlayer + "first";
         save("not", "first");
+    }
+    if(gameOver.length > 0){
+        oppoPlayer = oppoPlayer + "finish";
     }
     if(handicap.length > 0){
         if (0 < handicap.length) {
@@ -55,7 +59,6 @@ const getData = () => {
 
         save(newData, "bomb");
         const player = recall("player");
-    // const player = getParam("player");
 
         // ポイント反映
         const p1Point = document.getElementById(`p1Point`);
@@ -63,35 +66,42 @@ const getData = () => {
         p1Point.textContent = p1PointGet;
         p2Point.textContent = p2PointGet;
 
-        const actionNum = document.getElementById("actionNum");
-        const bombActionNum = document.getElementById("bombActionNum");
-        const board =  document.getElementById("board");
+        if(nextPlayer.indexOf("finish") == -1){
+            const actionNum = document.getElementById("actionNum");
+            const bombActionNum = document.getElementById("bombActionNum");
+            const board =  document.getElementById("board");
 
-        if(nextPlayer.substr(0, 2) == player){ // 自分のターンなら
-            actionNum.textContent = JSON.parse(data[0].行動回数);
-            bombActionNum.textContent = JSON.parse(data[0].爆弾設置回数);
-            board.style.pointerEvents = "auto";
+            if(nextPlayer.substr(0, 2) == player){ // 自分のターンなら
+                actionNum.textContent = JSON.parse(data[0].行動回数);
+                bombActionNum.textContent = JSON.parse(data[0].爆弾設置回数);
+                board.style.pointerEvents = "auto";
+            }
+            else{
+                actionNum.textContent = 0;
+                bombActionNum.textContent = 0;
+                board.style.pointerEvents = "none";
+            }
+
+            if(nextPlayer.indexOf("first") != -1){ // && player == "p2"){ // 後攻の初手
+                const actionNumArea = document.getElementById("actionNumArea");
+                addDiv(actionNumArea, ["handicap"], (t) => {
+                    t.textContent = ", ハンデ爆弾_";
+                });
+                addDiv(actionNumArea, ["handicap"], (t) => {
+                    t.id = "handicap";
+                    t.textContent = 2;
+                });
+            }
         }
         else{
-            actionNum.textContent = 0;
-            bombActionNum.textContent = 0;
+            const board =  document.getElementById("board");
             board.style.pointerEvents = "none";
-        }
-
-        if(nextPlayer.indexOf("first") != -1){ // 後攻の初手
-            const actionNumArea = document.getElementById("actionNumArea");
-            addDiv(actionNumArea, ["handicap"], (t) => {
-                t.textContent = ", ハンデ爆弾_";
-            });
-            addDiv(actionNumArea, ["handicap"], (t) => {
-                t.id = "handicap";
-                t.textContent = 2;
+            addDiv(board, ["gameOver"], (t) => { // 爆弾踏んだときだけ
+                t.textContent = "You win!";
             });
         }
 
         cellUpdate(newData, "td");
-        // openUpdate(player);
-        // cellUpdate(oldData, "preTd");
         openUpdate(player);
         checkClear();
     });

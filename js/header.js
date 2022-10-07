@@ -20,7 +20,6 @@ const putHeader = () => {
     addInput(setting2, "radio", "p2", ["input", "playerNum"], (t) => {
         t.id = "p2Radio";
         t.name = "playerSelect";
-        t.textContent ="プレイヤー２";
     });
     addLabel(setting2, "p2Radio", "プレイヤー２");
 

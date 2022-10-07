@@ -5,7 +5,6 @@ const putBody = () => {
     body.innerHTML = ""; // 中の要素全削除
 
     const player = recall("player");
-    // const player = getParam("player");
     const userBody = addDiv(body, [], (t) => {
         t.id = `${player}Body`;
     });
@@ -13,7 +12,6 @@ const putBody = () => {
     const width = document.getElementById("width").value;
     const height = document.getElementById("height").value;
     const bomb = document.getElementById("bomb").value;
-    // let bombNum = document.getElementById("oriBomb");
     let bombCord = [];
     save(bombCord, "bomb");
 
@@ -96,7 +94,6 @@ const putBody = () => {
 
     addTrTd(board, height, width, ["td"], (t) => {
         t.addEventListener("click", leftClick);
-        // t.addEventListener("dblclick", leftDbClick);
         t.addEventListener("contextmenu", rightClick);
     });
 
@@ -109,17 +106,6 @@ const putBody = () => {
         t.textContent = "Get";
         t.addEventListener("click", getData);
     });
-
-    // const preBoard = addBoard(userBody, ["preBoard"], (t) => {
-    //     t.style.pointerEvents = "auto";
-    //     t.id = "preBoard";
-    // });
-    
-    // addTrTd(preBoard, height, width, ["preTd"], (t) => {
-    //     // t.addEventListener("click", leftClick);
-    //     // t.addEventListener("dblclick", leftDbClick);
-    //     // t.addEventListener("contextmenu", rightClick);
-    // });
 }
 
 // 爆弾を設置

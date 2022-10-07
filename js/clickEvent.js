@@ -29,7 +29,6 @@ const leftClick = (event) => {
     const bomb = document.getElementById("bomb").value;
     let bombCord = recall("bomb");
     const player = recall("player");
-    // const player = getParam("player");
     const oppoPlayer = (player == "p1") ? "p2" : "p1";
     
     const actionNum = document.getElementById("actionNum");
@@ -37,7 +36,7 @@ const leftClick = (event) => {
     const handicap = document.getElementsByClassName("handicap");
 
     // すでに空いているマスや旗が置いてあったら何もしない
-    if(target.className.indexOf(`${player}Open`) >= 0){ // target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0
+    if(target.className.indexOf(`${player}Open`) >= 0){
         return;
     }
 
@@ -63,9 +62,11 @@ const leftClick = (event) => {
         if (target.className.indexOf("oriBomb") >= 0 || target.className.indexOf(`${oppoPlayer}Bomb`) >= 0) { // p1Bombの判定は後ほど改変   
             const board =  document.getElementById("board");
             board.style.pointerEvents = "none";
-            addDiv(board, [], (t) => {
-                t.textContent = "Game Over";
+            addDiv(board, ["gameOver"], (t) => {
+                t.textContent = "You Lose.";
             });
+
+            submit();
 
             return;
         }
@@ -113,7 +114,6 @@ const rightClick = (event) => {
     const target = event.target;
     let flagNum = document.getElementById("flagNum");
     const player = recall("player");
-    // const player = getParam("player");
 
     event.preventDefault();
     if (target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0) {
@@ -129,13 +129,6 @@ const rightClick = (event) => {
             flagNum.textContent = Number(flagNum.textContent) - 1;
         }
     }
-    // target.classList.toggle("p1Flag");
-    // if (target.className.indexOf("p1Flag") >= 0) {
-    //     flagNum.textContent = Number(flagNum.textContent) + 1;
-    // } 
-    // else {
-    //     flagNum.textContent = Number(flagNum.textContent) - 1;
-    // }
     
     cordUpdate();
 }
@@ -143,11 +136,9 @@ const rightClick = (event) => {
 // シフト+クリックされた時
 const leftShiftClick = (target) => {
     let currentBombNum = document.getElementById("currentBombNum");
-    // let bombNum = recall("bombNum");
     let bombNum = Number(currentBombNum.textContent);
     let flagNum = document.getElementById("flagNum");
     const player = recall("player");
-    // const player = getParam("player");
 
     // 爆弾追加
     if((target.className).indexOf(`${player}Bomb`) == -1){
@@ -184,8 +175,6 @@ const leftShiftClick = (target) => {
         flagNum.textContent = Number(flagNum.textContent) - 1;
     }
 
-
-    // save(bombCord, "bomb");
     cordUpdate();
     openUpdate(player);
     save(bombNum, "bombNum");

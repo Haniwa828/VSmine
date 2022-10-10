@@ -36,7 +36,7 @@ const leftClick = (event) => {
     const handicap = document.getElementsByClassName("handicap");
 
     // すでに空いているマスや旗が置いてあったら何もしない
-    if(target.className.indexOf(`${player}Open`) >= 0){
+    if(target.className.indexOf(`${player}Open`) >= 0){ // target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0
         return;
     }
 
@@ -45,7 +45,7 @@ const leftClick = (event) => {
 
     // シフトキー押しながらの場合
     if (event.shiftKey == true && first != "first") { // 初手はできなくする
-        if((bombActionNum.textContent == "0" && (handicap[0] == undefined || Number(handicap[1].textContent) == 0)) || target.className.indexOf(`${oppoPlayer}Open`) >= 0){ // 爆弾操作回数上限もしくは相手が開いていたならば
+        if((bombActionNum.textContent == "0" && (Number(handicap[1].textContent) == 0)) || target.className.indexOf(`${oppoPlayer}Open`) >= 0){ // 爆弾操作回数上限もしくは相手が開いていたならば
             return;
         }
         leftShiftClick(target);
@@ -57,15 +57,16 @@ const leftClick = (event) => {
         return
     }
 
-    if(actionNum.textContent != "0"){    
+    // if(actionNum.textContent != "0"){    
         // 爆弾を踏んだか判定
         if (target.className.indexOf("oriBomb") >= 0 || target.className.indexOf(`${oppoPlayer}Bomb`) >= 0) { // p1Bombの判定は後ほど改変   
             const board =  document.getElementById("board");
             board.style.pointerEvents = "none";
-            addDiv(board, ["gameOver"], (t) => {
-                t.textContent = "You Lose.";
-            });
+            const gameOver = document.getElementById("gameOver");
+            gameOver.style.display = "block";
+            gameOver.textContent = "You Lose";
 
+            clearInterval(reload);
             submit();
 
             return;
@@ -88,11 +89,15 @@ const leftClick = (event) => {
 
         // 行動回数
         actionNum.textContent = Number(actionNum.textContent) - 1;
-    }
+
+        if(actionNum.textContent == "0" && handicap[1].textContent == "0"){
+            submit();
+        }
+    // }
 
     if(actionNum.textContent == "0"){
         // ハンデ考慮
-        if(handicap[0] == undefined || Number(handicap[1].textContent) == 0){
+        if(Number(handicap[1].textContent) == 0){
             const board =  document.getElementById("board");
 
             bombActionNum.textContent = 0;
@@ -193,12 +198,35 @@ const leftShiftClick = (target) => {
         bombActionNum.textContent = Number(bombActionNum.textContent) - 1;
     }
 
-    if(actionNum.textContent == "0" && (handicap[0] == undefined || Number(handicap[1].textContent) == 0)){
+    if(actionNum.textContent == "0" && (Number(handicap[1].textContent) == 0)){
         const board =  document.getElementById("board");
 
         bombActionNum.textContent = 0;
         board.style.pointerEvents = "none";
     }
 
+    if(actionNum.textContent == "0" && handicap[1].textContent == "0"){
+        submit();
+    }
+
     checkClear();
 } 
+
+let reload;
+const autoReload = (event) => {
+    if(event.target.value%2 == 0){
+        reload = setInterval((paused = false) => {
+            getData()
+            
+            if(paused){
+                clearInterval(reload);
+            }
+        }, 5000);
+    }
+    else{
+        clearInterval(reload);
+    }
+    
+    event.target.value++;
+}
+

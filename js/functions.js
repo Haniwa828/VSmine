@@ -83,37 +83,32 @@ const checkClear = (width = 9, height = 9) => {
         board.style.pointerEvents = "none";
 
         const player = recall("player");
+        const gameOver = document.getElementById("gameOver");
 
         if(Number(p1Point.textContent) > Number(p2Point.textContent)){
             if(player == "p1"){
-                addDiv(board, [], (t) => {
-                    t.textContent = "You Win!";
-                });
+                gameOver.style.display = "block";
             }
             else{
-                addDiv(board, [], (t) => {
-                    t.textContent = "You Lose.";
-                });
+                gameOver.style.display = "block";
+                gameOver.textContent = "You Lose";
             }
         }
         else if(Number(p1Point.textContent) < Number(p2Point.textContent)){
             if(player == "p1"){
-                addDiv(board, [], (t) => {
-                    t.textContent = "You Lose.";
-                });
+                gameOver.style.display = "block";
+                gameOver.textContent = "You Lose";
             }
             else{
-                addDiv(board, [], (t) => {
-                    t.textContent = "You Win!";
-                });
+                gameOver.style.display = "block";
             }
         }
         else{
-            addDiv(board, [], (t) => {
-                t.textContent = "Draw";
-            });
+            gameOver.style.display = "block";
+            gameOver.textContent = "Draw";
         }
 
+        clearInterval(reload);
         submit();
 
         return;

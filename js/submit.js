@@ -9,7 +9,7 @@ const submit = () => {
     const bombActionNum = document.getElementById("bombActionNum");
     const handicap = document.getElementsByClassName("handicap");
     const roomPass = document.getElementById("roomPass").value;
-    const gameOver = document.getElementsByClassName("gameOver");
+    const gameOver = document.getElementById("gameOver");
 
     
     actionNum.textContent = 0;
@@ -19,13 +19,12 @@ const submit = () => {
         oppoPlayer = oppoPlayer + "first";
         save("not", "first");
     }
-    if(gameOver.length > 0){
+    if(gameOver.style.display == "block"){
         oppoPlayer = oppoPlayer + "finish";
     }
     if(handicap.length > 0){
-        if (0 < handicap.length) {
-            [...handicap].forEach(function(v){ return v.remove() })
-        }
+        handicap[0].style.display = "none";
+        handicap[1].style.display = "none";
     }
 
     // URLの作成
@@ -57,17 +56,19 @@ const getData = () => {
         const p2PointGet = JSON.parse(data[0].p2);
         let nextPlayer = data[0].プレイヤー;
 
-        save(newData, "bomb");
-        const player = recall("player");
+        const actionNum = document.getElementById("actionNum");
+        const handicap = document.getElementsByClassName("handicap");
 
-        // ポイント反映
-        const p1Point = document.getElementById(`p1Point`);
-        const p2Point = document.getElementById(`p2Point`);
-        p1Point.textContent = p1PointGet;
-        p2Point.textContent = p2PointGet;
+        if(nextPlayer.indexOf("finish") == -1 && ((actionNum.textContent == 0 || actionNum.textContent == 5) && handicap[0].style.display == "none")){
+            save(newData, "bomb");
+            const player = recall("player");
 
-        if(nextPlayer.indexOf("finish") == -1){
-            const actionNum = document.getElementById("actionNum");
+            // ポイント反映
+            const p1Point = document.getElementById(`p1Point`);
+            const p2Point = document.getElementById(`p2Point`);
+            p1Point.textContent = p1PointGet;
+            p2Point.textContent = p2PointGet;
+
             const bombActionNum = document.getElementById("bombActionNum");
             const board =  document.getElementById("board");
 
@@ -82,27 +83,40 @@ const getData = () => {
                 board.style.pointerEvents = "none";
             }
 
-            if(nextPlayer.indexOf("first") != -1){ // && player == "p2"){ // 後攻の初手
-                const actionNumArea = document.getElementById("actionNumArea");
-                addDiv(actionNumArea, ["handicap"], (t) => {
-                    t.textContent = ", ハンデ爆弾_";
-                });
-                addDiv(actionNumArea, ["handicap"], (t) => {
-                    t.id = "handicap";
-                    t.textContent = 2;
-                });
+            if(nextPlayer.indexOf("first") != -1 && nextPlayer.substr(0, 2) == player){ // && player == "p2"){ // 後攻の初手
+                for(let i = 0; i < handicap.length; i++){
+                    handicap[i].style.display = "block";
+
+                    if(i == 1){
+                        handicap[i].textContent = 2;
+                    }
+                }
             }
+
+            cellUpdate(newData, "td");
+            openUpdate(player);
+            checkClear();
         }
-        else{
+        else if(nextPlayer.indexOf("finish") != -1){
+            save(newData, "bomb");
+            const player = recall("player");
+
+            // ポイント反映
+            const p1Point = document.getElementById(`p1Point`);
+            const p2Point = document.getElementById(`p2Point`);
+            p1Point.textContent = p1PointGet;
+            p2Point.textContent = p2PointGet;
+
             const board =  document.getElementById("board");
             board.style.pointerEvents = "none";
-            addDiv(board, ["gameOver"], (t) => { // 爆弾踏んだときだけ
-                t.textContent = "You win!";
-            });
-        }
+            const gameOver = document.getElementById("gameOver");
+            gameOver.style.display = "block";
 
-        cellUpdate(newData, "td");
-        openUpdate(player);
-        checkClear();
+            cellUpdate(newData, "td");
+            openUpdate(player);
+            checkClear();
+
+            clearInterval(reload);
+        }
     });
 }

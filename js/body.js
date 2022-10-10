@@ -85,6 +85,15 @@ const putBody = () => {
     addDiv(actionNumArea, [], (t) => {
         t.textContent = ")";
     });
+    addDiv(actionNumArea, ["handicap"], (t) => {
+        t.textContent = ", ハンデ爆弾_";
+        t.style.display = "none";
+    });
+    addDiv(actionNumArea, ["handicap"], (t) => {
+        t.id = "handicap";
+        t.textContent = 0;
+        t.style.display = "none";
+    });
 
     const boardArea = addDiv(userBody, ["boardArea"]);
     const board = addBoard(boardArea, ["board"], (t) => {
@@ -96,6 +105,11 @@ const putBody = () => {
         t.addEventListener("click", leftClick);
         t.addEventListener("contextmenu", rightClick);
     });
+    
+    addDiv(board, ["gameOver"], (t) => {
+        t.id = "gameOver";
+        t.textContent = "You win!";
+    });
 
     addButton(userBody, "button", [], (t) => {
         t.textContent = "Submit";
@@ -106,6 +120,13 @@ const putBody = () => {
         t.textContent = "Get";
         t.addEventListener("click", getData);
     });
+
+    addInput(userBody, "CheckBox", 0, [], (t) => {
+        t.id = "autoReload";
+        t.name = "autoReload";
+        t.addEventListener("click", autoReload);
+    });
+    addLabel(userBody, "autoReload", "自動更新");
 }
 
 // 爆弾を設置

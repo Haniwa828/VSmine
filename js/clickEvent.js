@@ -30,9 +30,27 @@ const leftClick = (event) => {
     target.classList.add(`target`);
 
     const buttons = document.getElementsByClassName('actionButton');
-    for(let i = 0; i < buttons.length; i++){
-        buttons[i].disabled = false;
+    const actionNum = document.getElementById("actionNum");
+    const handicap = document.getElementById("handicap");
+
+    console.log(actionNum.textContent)
+    console.log(handicap.textContent)
+
+    if(actionNum.textContent == '0' && (handicap.textContent == '0')){
+        buttons[2].disabled = false;
+        
     }
+    else if(actionNum.textContent == '0' && handicap.textContent > '0'){
+        buttons[1].disabled = false;
+        buttons[2].disabled = false;
+    }
+    else{
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].disabled = false;
+        }
+    }
+    
+
 }
 
 // Openがクリックされた時
@@ -73,7 +91,12 @@ const openCell = () => {
         gameOver.style.display = "block";
         gameOver.textContent = "You Lose";
 
-        clearInterval(reload);
+        // clearInterval(reload);
+        const buttons = document.getElementsByClassName('actionButton');
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].disabled = true;
+        }
+
         submit();
 
         return;
@@ -86,11 +109,14 @@ const openCell = () => {
         target.classList.add(`${oppoPlayer}Open`); // 初手はお互いに公開
     }
 
+    // 各種ボタンの無効化
     target.classList.toggle(`target`);
     const buttons = document.getElementsByClassName('actionButton');
     for(let i = 0; i < buttons.length; i++){
         buttons[i].disabled = true;
     }
+    const getButton = document.getElementById('get');
+    getButton.disabled = true;
 
     cordUpdate();
     if (first == "first") { // 初手は実行
@@ -103,13 +129,18 @@ const openCell = () => {
     // 行動回数
     actionNum.textContent = Number(actionNum.textContent) - 1;
 
+    if(actionNum.textContent == "0" && handicap[1].textContent == "0"){
+        // submit();
+        const submitButton = document.getElementById('submit');
+        submitButton.disabled = false;
+    }
+
     if(actionNum.textContent == "0"){
         // ハンデ考慮
         if(Number(handicap[1].textContent) == 0){
             const board =  document.getElementById("board");
 
             bombActionNum.textContent = 0;
-            board.style.pointerEvents = "none";
         }
     }
 
@@ -183,6 +214,8 @@ const setBomb = () => {
     for(let i = 0; i < buttons.length; i++){
         buttons[i].disabled = true;
     }
+    const getButton = document.getElementById('get');
+    getButton.disabled = true;
 
     cordUpdate();
     openUpdate(player);
@@ -198,10 +231,10 @@ const setBomb = () => {
     }
 
     if(actionNum.textContent == "0" && (Number(handicap[1].textContent) == 0)){
-        const board =  document.getElementById("board");
-
         bombActionNum.textContent = 0;
-        board.style.pointerEvents = "none";
+
+        const submitButton = document.getElementById('submit');
+        submitButton.disabled = false;
     }
 
     checkClear();
@@ -227,6 +260,13 @@ const setFlag = () => {
         else {
             flagNum.textContent = Number(flagNum.textContent) - 1;
         }
+    }
+    
+    // 各種ボタンの無効化
+    target.classList.toggle(`target`);
+    const buttons = document.getElementsByClassName('actionButton');
+    for(let i = 0; i < buttons.length; i++){
+        buttons[i].disabled = true;
     }
     
     cordUpdate();

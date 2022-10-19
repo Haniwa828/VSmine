@@ -108,7 +108,6 @@ const checkClear = (width = 9, height = 9) => {
             gameOver.textContent = "Draw";
         }
 
-        clearInterval(reload);
         submit();
 
         return;

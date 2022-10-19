@@ -111,11 +111,14 @@ const putBody = () => {
     });
 
     addButton(userBody, "button", [], (t) => {
+        t.id = 'submit';
         t.textContent = "Submit";
         t.addEventListener("click", submit);
+        t.disabled = true;
     });
 
     addButton(userBody, "button", [], (t) => {
+        t.id = 'get';
         t.textContent = "Get";
         t.addEventListener("click", getData);
     });
@@ -132,19 +135,19 @@ const putBody = () => {
     addButton(actionButtonArea, "button", ['actionButton'], (t) => {
         t.textContent = "Open";
         t.addEventListener("click", openCell);
-        t.disabled = true
+        t.disabled = true;
     });
 
     addButton(actionButtonArea, "button", ['actionButton'], (t) => {
         t.textContent = "Set Bomb";
         t.addEventListener("click", setBomb);
-        t.disabled = true
+        t.disabled = true;
     });
 
     addButton(actionButtonArea, "button", ['actionButton'], (t) => {
         t.textContent = "Set Flag";
         t.addEventListener("click", setFlag);
-        t.disabled = true
+        t.disabled = true;
     });
 }
 

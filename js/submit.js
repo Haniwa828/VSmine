@@ -27,6 +27,13 @@ const submit = () => {
         handicap[1].style.display = "none";
     }
 
+    const submitButton = document.getElementById('submit');
+    submitButton.disabled = true;
+    const getButton = document.getElementById('get');
+    getButton.disabled = false;
+    const board =  document.getElementById("board");
+    board.style.pointerEvents = "none";
+
     // URLの作成
     let url = "https://script.google.com/macros/s/AKfycbzR0tVy7PUDz-muHXFPgI-uFAG6Ag3IPGiz1Fthv5riQs1a3HjwpXeF-TRsbZfhk6SaUg/exec?data=";
     url = url + bombCordJson + "&p1=" + p1Point.textContent + "&p2=" + p2Point.textContent + "&player=" + oppoPlayer + "&pass=" + roomPass;
@@ -93,6 +100,9 @@ const getData = () => {
                 }
             }
 
+            const getButton = document.getElementById('get');
+            getButton.disabled = true;
+
             cellUpdate(newData, "td");
             openUpdate(player);
             checkClear();
@@ -115,8 +125,6 @@ const getData = () => {
             cellUpdate(newData, "td");
             openUpdate(player);
             checkClear();
-
-            clearInterval(reload);
         }
     });
 }

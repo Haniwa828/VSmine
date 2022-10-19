@@ -63,3 +63,14 @@ td{
 #p1Body .p1Bomb, #p2Body .p2Bomb{
     background-color: coral;
 }
+
+.actionButton{
+    width: 25%;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.target{
+    border: 2px solid;
+    border-style: dashed;
+}

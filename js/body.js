@@ -103,7 +103,6 @@ const putBody = () => {
 
     addTrTd(board, height, width, ["td"], (t) => {
         t.addEventListener("click", leftClick);
-        t.addEventListener("contextmenu", rightClick);
     });
     
     addDiv(board, ["gameOver"], (t) => {
@@ -121,12 +120,32 @@ const putBody = () => {
         t.addEventListener("click", getData);
     });
 
-    addInput(userBody, "CheckBox", 0, [], (t) => {
-        t.id = "autoReload";
-        t.name = "autoReload";
-        t.addEventListener("click", autoReload);
+    // addInput(userBody, "CheckBox", 0, [], (t) => {
+    //     t.id = "autoReload";
+    //     t.name = "autoReload";
+    //     t.addEventListener("click", autoReload);
+    // });
+    // addLabel(userBody, "autoReload", "自動更新");
+
+    const actionButtonArea = addDiv(userBody);
+
+    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
+        t.textContent = "Open";
+        t.addEventListener("click", openCell);
+        t.disabled = true
     });
-    addLabel(userBody, "autoReload", "自動更新");
+
+    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
+        t.textContent = "Set Bomb";
+        t.addEventListener("click", setBomb);
+        t.disabled = true
+    });
+
+    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
+        t.textContent = "Set Flag";
+        t.addEventListener("click", setFlag);
+        t.disabled = true
+    });
 }
 
 // 爆弾を設置

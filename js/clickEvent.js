@@ -19,8 +19,26 @@ const start = () => {
 
 // マスが左クリックされた時
 const leftClick = (event) => {
-    // 座標取得
+    const targets = document.getElementsByClassName('target');
+    if(targets.length > 0){
+        for(let i = 0; i < targets.length; i++){
+            targets[i].classList.toggle(`target`);
+        }
+    }
+
     const target = event.target;
+    target.classList.add(`target`);
+
+    const buttons = document.getElementsByClassName('actionButton');
+    for(let i = 0; i < buttons.length; i++){
+        buttons[i].disabled = false;
+    }
+}
+
+// Openがクリックされた時
+const openCell = () => {
+    // 座標取得
+    const target = (document.getElementsByClassName('target'))[0];
     const x = Number(target.id.substr(target.id.indexOf(":") + 1, target.id.length));
     const y = Number(target.id.substr(2, target.id.indexOf(":") - 2));
 
@@ -43,57 +61,47 @@ const leftClick = (event) => {
     // 一手目か確認
     const first = checkFirst(x, y, width, height, bomb, bombCord);
 
-    // シフトキー押しながらの場合
-    if (event.shiftKey == true && first != "first") { // 初手はできなくする
-        if((bombActionNum.textContent == "0" && (Number(handicap[1].textContent) == 0)) || target.className.indexOf(`${oppoPlayer}Open`) >= 0){ // 爆弾操作回数上限もしくは相手が開いていたならば
-            return;
-        }
-        leftShiftClick(target);
-
-        return;
-    }
-
     if(target.className.indexOf(`${player}Flag`) >= 0){
         return
     }
 
-    // if(actionNum.textContent != "0"){    
-        // 爆弾を踏んだか判定
-        if (target.className.indexOf("oriBomb") >= 0 || target.className.indexOf(`${oppoPlayer}Bomb`) >= 0) { // p1Bombの判定は後ほど改変   
-            const board =  document.getElementById("board");
-            board.style.pointerEvents = "none";
-            const gameOver = document.getElementById("gameOver");
-            gameOver.style.display = "block";
-            gameOver.textContent = "You Lose";
+    // 爆弾を踏んだか判定
+    if (target.className.indexOf("oriBomb") >= 0 || target.className.indexOf(`${oppoPlayer}Bomb`) >= 0) { // p1Bombの判定は後ほど改変   
+        const board =  document.getElementById("board");
+        board.style.pointerEvents = "none";
+        const gameOver = document.getElementById("gameOver");
+        gameOver.style.display = "block";
+        gameOver.textContent = "You Lose";
 
-            clearInterval(reload);
-            submit();
+        clearInterval(reload);
+        submit();
 
-            return;
-        }
+        return;
+    }
 
-        // 周囲の爆弾の個数確認と展開
-        countBomb(y, x, width, height, bombCord, target);
-        target.classList.add(`${player}Open`);
-        if (first == "first") { // 初手は実行
-            target.classList.add(`${oppoPlayer}Open`); // 初手はお互いに公開
-        }
+    // 周囲の爆弾の個数確認と展開
+    countBomb(y, x, width, height, bombCord, target);
+    target.classList.add(`${player}Open`);
+    if (first == "first") { // 初手は実行
+        target.classList.add(`${oppoPlayer}Open`); // 初手はお互いに公開
+    }
 
-        cordUpdate();
-        if (first == "first") { // 初手は実行
-            openUpdate(player);
-        }
+    target.classList.toggle(`target`);
+    const buttons = document.getElementsByClassName('actionButton');
+    for(let i = 0; i < buttons.length; i++){
+        buttons[i].disabled = true;
+    }
 
-        // ポイント加算
-        addPoint(target, player, oppoPlayer);
+    cordUpdate();
+    if (first == "first") { // 初手は実行
+        openUpdate(player);
+    }
 
-        // 行動回数
-        actionNum.textContent = Number(actionNum.textContent) - 1;
+    // ポイント加算
+    addPoint(target, player, oppoPlayer);
 
-        if(actionNum.textContent == "0" && handicap[1].textContent == "0"){
-            submit();
-        }
-    // }
+    // 行動回数
+    actionNum.textContent = Number(actionNum.textContent) - 1;
 
     if(actionNum.textContent == "0"){
         // ハンデ考慮
@@ -111,39 +119,29 @@ const leftClick = (event) => {
     if(recall("first") != "first" && first == "first"){ // 初手っていう指示
         save(first, "first");
     }
-    
 }
 
-// マスが右クリックされた時
-const rightClick = (event) => {
-    const target = event.target;
-    let flagNum = document.getElementById("flagNum");
+// Set Bombがクリックされた時
+const setBomb = () => {
+    const target = (document.getElementsByClassName('target'))[0];
+    // 行動回数
+    const actionNum = document.getElementById("actionNum");
+    const bombActionNum = document.getElementById("bombActionNum");
+    const handicap = document.getElementsByClassName("handicap");
     const player = recall("player");
 
-    event.preventDefault();
-    if (target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0) {
-        return;   
+    // 一手目か確認
+    let bombCord = recall("bomb");
+    if(bombCord.length == 0 || bombActionNum.textContent == '0' || (target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0)){
+        return;
+    }
+    if(target.className.indexOf(`${player}Flag`) >= 0){
+        return
     }
 
-    if(target.className.indexOf(`${player}Bomb`) == -1){
-        target.classList.toggle(`${player}Flag`);
-        if (target.className.indexOf(`${player}Flag`) >= 0) {
-            flagNum.textContent = Number(flagNum.textContent) + 1;
-        } 
-        else {
-            flagNum.textContent = Number(flagNum.textContent) - 1;
-        }
-    }
-    
-    cordUpdate();
-}
-
-// シフト+クリックされた時
-const leftShiftClick = (target) => {
     let currentBombNum = document.getElementById("currentBombNum");
     let bombNum = Number(currentBombNum.textContent);
     let flagNum = document.getElementById("flagNum");
-    const player = recall("player");
 
     // 爆弾追加
     if((target.className).indexOf(`${player}Bomb`) == -1){
@@ -180,14 +178,15 @@ const leftShiftClick = (target) => {
         flagNum.textContent = Number(flagNum.textContent) - 1;
     }
 
+    target.classList.toggle(`target`);
+    const buttons = document.getElementsByClassName('actionButton');
+    for(let i = 0; i < buttons.length; i++){
+        buttons[i].disabled = true;
+    }
+
     cordUpdate();
     openUpdate(player);
     save(bombNum, "bombNum");
-
-    // 行動回数
-    const actionNum = document.getElementById("actionNum");
-    const bombActionNum = document.getElementById("bombActionNum");
-    const handicap = document.getElementsByClassName("handicap");
 
     // ハンデ考慮
     if(!(handicap[0] == undefined)  && Number(handicap[1].textContent) > 0){
@@ -205,28 +204,30 @@ const leftShiftClick = (target) => {
         board.style.pointerEvents = "none";
     }
 
-    if(actionNum.textContent == "0" && handicap[1].textContent == "0"){
-        submit();
-    }
-
     checkClear();
 } 
 
-let reload;
-const autoReload = (event) => {
-    if(event.target.value%2 == 0){
-        reload = setInterval((paused = false) => {
-            getData()
-            
-            if(paused){
-                clearInterval(reload);
-            }
-        }, 5000);
+// Set Flagがクリックされた時
+const setFlag = () => {
+    const target = (document.getElementsByClassName('target'))[0];
+    let flagNum = document.getElementById("flagNum");
+    const player = recall("player");
+    // const player = getParam("player");
+
+    event.preventDefault();
+    if (target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0) {
+        return;   
     }
-    else{
-        clearInterval(reload);
+
+    if(target.className.indexOf(`${player}Bomb`) == -1){
+        target.classList.toggle(`${player}Flag`);
+        if (target.className.indexOf(`${player}Flag`) >= 0) {
+            flagNum.textContent = Number(flagNum.textContent) + 1;
+        } 
+        else {
+            flagNum.textContent = Number(flagNum.textContent) - 1;
+        }
     }
     
-    event.target.value++;
+    cordUpdate();
 }
-

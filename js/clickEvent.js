@@ -172,7 +172,7 @@ const setBomb = () => {
     if(bombCord.length == 0 || bombActionNum.textContent == '0' || (target.className.indexOf(`p1Open`) >= 0 || target.className.indexOf(`p2Open`) >= 0)){
         return;
     }
-    if(target.className.indexOf(`${player}Flag`) >= 0){
+    if(target.className.indexOf(`${player}Flag`) >= 0 && target.className.indexOf(`${player}Bomb`) == -1){
         return
     }
 

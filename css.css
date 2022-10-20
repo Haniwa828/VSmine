@@ -56,10 +56,6 @@ td{
     background-color: yellow;
 }
 
-/* .oriBomb{
-    background-color: red;
-} */
-
 #p1Body .p1Bomb, #p2Body .p2Bomb{
     background-color: coral;
 }
@@ -80,9 +76,14 @@ button{
     color: #333;
     font-size: 12px;
     font-weight: 700;
+    background-color: gray;
     box-shadow: 0 0 10px rgba(0 0 0 / .2);
     border-radius: 6px;
     transition: 0.3s;
+}
+
+button.can{
+    background-color: white;
 }
 
 button.can:hover {

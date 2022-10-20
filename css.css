@@ -1,4 +1,4 @@
-.setting, .setting2, .setting3, .bombArea, .boardArea, .pointArea, .actionNumArea{
+.setting, .setting2, .setting3, .bombArea, .boardArea, .pointArea, .actionNumArea, #submitArea{
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
@@ -67,7 +67,42 @@ td{
 .actionButton{
     width: 25%;
     margin-left: 4%;
-    margin-right: 4%;
+    margin-bottom: 10px;
+}
+
+#submit, #get{
+    width: 25%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+button{
+    color: #333;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(0 0 0 / .2);
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+button.can:hover {
+    text-decoration: none;
+    background-color: #aaaaaa;
+    box-shadow: 0 0 10px rgba(0 0 0 / 0);
+}
+
+div{
+    font-size: 16px;
+    font-weight: 550;
+}
+
+input{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.rule{
+    font-weight: 500;
 }
 
 .target{

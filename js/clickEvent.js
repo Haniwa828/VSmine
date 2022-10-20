@@ -38,19 +38,21 @@ const leftClick = (event) => {
 
     if(actionNum.textContent == '0' && (handicap.textContent == '0')){
         buttons[2].disabled = false;
+        buttons[2].classList.toggle('can');
         
     }
     else if(actionNum.textContent == '0' && handicap.textContent > '0'){
         buttons[1].disabled = false;
         buttons[2].disabled = false;
+        buttons[1].classList.toggle('can');
+        buttons[2].classList.toggle('can');
     }
     else{
         for(let i = 0; i < buttons.length; i++){
             buttons[i].disabled = false;
+            buttons[i].classList.toggle('can');
         }
     }
-    
-
 }
 
 // Openがクリックされた時
@@ -95,6 +97,7 @@ const openCell = () => {
         const buttons = document.getElementsByClassName('actionButton');
         for(let i = 0; i < buttons.length; i++){
             buttons[i].disabled = true;
+            buttons[i].classList.toggle('can');
         }
 
         submit();
@@ -114,9 +117,11 @@ const openCell = () => {
     const buttons = document.getElementsByClassName('actionButton');
     for(let i = 0; i < buttons.length; i++){
         buttons[i].disabled = true;
+        buttons[i].classList.toggle('can');
     }
     const getButton = document.getElementById('get');
     getButton.disabled = true;
+    getButton.classList.remove('can');
 
     cordUpdate();
     if (first == "first") { // 初手は実行
@@ -133,6 +138,7 @@ const openCell = () => {
         // submit();
         const submitButton = document.getElementById('submit');
         submitButton.disabled = false;
+        submitButton.classList.toggle('can');
     }
 
     if(actionNum.textContent == "0"){
@@ -213,9 +219,11 @@ const setBomb = () => {
     const buttons = document.getElementsByClassName('actionButton');
     for(let i = 0; i < buttons.length; i++){
         buttons[i].disabled = true;
+        buttons[i].classList.toggle('can');
     }
     const getButton = document.getElementById('get');
     getButton.disabled = true;
+    getButton.classList.remove('can');
 
     cordUpdate();
     openUpdate(player);
@@ -235,6 +243,7 @@ const setBomb = () => {
 
         const submitButton = document.getElementById('submit');
         submitButton.disabled = false;
+        submitButton.classList.toggle('can');
     }
 
     checkClear();
@@ -267,6 +276,7 @@ const setFlag = () => {
     const buttons = document.getElementsByClassName('actionButton');
     for(let i = 0; i < buttons.length; i++){
         buttons[i].disabled = true;
+        buttons[i].classList.toggle('can');
     }
     
     cordUpdate();

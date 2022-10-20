@@ -29,8 +29,10 @@ const submit = () => {
 
     const submitButton = document.getElementById('submit');
     submitButton.disabled = true;
+    submitButton.classList.toggle('can');
     const getButton = document.getElementById('get');
     getButton.disabled = false;
+    getButton.classList.toggle('can');
     const board =  document.getElementById("board");
     board.style.pointerEvents = "none";
 
@@ -83,6 +85,10 @@ const getData = () => {
                 actionNum.textContent = JSON.parse(data[0].行動回数);
                 bombActionNum.textContent = JSON.parse(data[0].爆弾設置回数);
                 board.style.pointerEvents = "auto";
+                
+                const getButton = document.getElementById('get');
+                getButton.disabled = true;
+                getButton.classList.toggle('can');
             }
             else{
                 actionNum.textContent = 0;
@@ -99,9 +105,6 @@ const getData = () => {
                     }
                 }
             }
-
-            const getButton = document.getElementById('get');
-            getButton.disabled = true;
 
             cellUpdate(newData, "td");
             openUpdate(player);

@@ -109,15 +109,39 @@ const putBody = () => {
         t.id = "gameOver";
         t.textContent = "You win!";
     });
+    
+    const actionButtonArea = addDiv(userBody);
 
-    addButton(userBody, "button", [], (t) => {
+    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
+        t.textContent = "Open";
+        t.addEventListener("click", openCell);
+        t.disabled = true;
+    });
+
+    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
+        t.textContent = "Bomb";
+        t.addEventListener("click", setBomb);
+        t.disabled = true;
+    });
+
+    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
+        t.textContent = "Flag";
+        t.addEventListener("click", setFlag);
+        t.disabled = true;
+    });
+
+    const submitArea = addDiv(userBody, [], (t) => {
+        t.id = 'submitArea';
+    });
+
+    addButton(submitArea, "button", [], (t) => {
         t.id = 'submit';
         t.textContent = "Submit";
         t.addEventListener("click", submit);
         t.disabled = true;
     });
 
-    addButton(userBody, "button", [], (t) => {
+    addButton(submitArea, "button", ['can'], (t) => {
         t.id = 'get';
         t.textContent = "Get";
         t.addEventListener("click", getData);
@@ -129,26 +153,6 @@ const putBody = () => {
     //     t.addEventListener("click", autoReload);
     // });
     // addLabel(userBody, "autoReload", "自動更新");
-
-    const actionButtonArea = addDiv(userBody);
-
-    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
-        t.textContent = "Open";
-        t.addEventListener("click", openCell);
-        t.disabled = true;
-    });
-
-    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
-        t.textContent = "Set Bomb";
-        t.addEventListener("click", setBomb);
-        t.disabled = true;
-    });
-
-    addButton(actionButtonArea, "button", ['actionButton'], (t) => {
-        t.textContent = "Set Flag";
-        t.addEventListener("click", setFlag);
-        t.disabled = true;
-    });
 }
 
 // 爆弾を設置

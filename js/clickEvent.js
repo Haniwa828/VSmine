@@ -38,19 +38,19 @@ const leftClick = (event) => {
 
     if(actionNum.textContent == '0' && (handicap.textContent == '0')){
         buttons[2].disabled = false;
-        buttons[2].classList.toggle('can');
+        buttons[2].classList.add('can');
         
     }
     else if(actionNum.textContent == '0' && handicap.textContent > '0'){
         buttons[1].disabled = false;
         buttons[2].disabled = false;
-        buttons[1].classList.toggle('can');
-        buttons[2].classList.toggle('can');
+        buttons[1].classList.add('can');
+        buttons[2].classList.add('can');
     }
     else{
         for(let i = 0; i < buttons.length; i++){
             buttons[i].disabled = false;
-            buttons[i].classList.toggle('can');
+            buttons[i].classList.add('can');
         }
     }
 }

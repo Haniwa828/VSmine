@@ -120,7 +120,7 @@ const putSetting = (parentArea) => {
         t.min = 2;
     });
     addLabel(parentArea, "bomb", "B:", ["label"]);
-    const bomb = addInput(parentArea, "number", 9, ["input"], (t) => {
+    const bomb = addInput(parentArea, "number", 15, ["input"], (t) => {
         t.id = "bomb";
         t.max = 10;
         t.min = 2;

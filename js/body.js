@@ -110,7 +110,7 @@ const putBody = () => {
         t.textContent = "You win!";
     });
     
-    const actionButtonArea = addDiv(userBody);
+    const actionButtonArea = addDiv(userBody, ['actionButtonArea']);
 
     addButton(actionButtonArea, "button", ['actionButton'], (t) => {
         t.textContent = "Open";

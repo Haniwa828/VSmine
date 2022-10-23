@@ -101,7 +101,7 @@ const getData = () => {
                     handicap[i].style.display = "block";
 
                     if(i == 1){
-                        handicap[i].textContent = 2;
+                        handicap[i].textContent = 4;
                     }
                 }
             }

@@ -99,6 +99,7 @@ const putBody = () => {
     const board = addBoard(boardArea, ["board"], (t) => {
         t.style.pointerEvents = "auto";
         t.id = "board";
+        t.style.pointerEvents = "auto";
     });
 
     addTrTd(board, height, width, ["td"], (t) => {

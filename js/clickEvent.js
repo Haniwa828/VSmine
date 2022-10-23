@@ -276,7 +276,7 @@ const setFlag = () => {
     const buttons = document.getElementsByClassName('actionButton');
     for(let i = 0; i < buttons.length; i++){
         buttons[i].disabled = true;
-        buttons[i].classList.toggle('can');
+        buttons[i].classList.remove('can');
     }
     
     cordUpdate();
